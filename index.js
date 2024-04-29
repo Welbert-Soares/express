@@ -1,8 +1,13 @@
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
 
 const saudacao = require("./saudacaoMid");
 
+
+app.use(bodyParser.text());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(saudacao("Guilherme"));
 
 app.use("/index", (require, response, next) => {
@@ -15,14 +20,15 @@ app.get('/clientes/relatorio', (require, response) => {
 })
 
 app.post('/corpo', (require, response) => {
-    let corpo = ''
-    require.on('data', function(parte){
-        corpo += parte
-    })
+    // let corpo = ''
+    // require.on('data', function(parte){
+    //     corpo += parte
+    // })
 
-    require.on('end', function(){
-        response.send(corpo)
-    })
+    // require.on('end', function(){
+    //     response.send(corpo)
+    // })
+    response.send(require.body)
 })
 
 app.get('/clientes/:id', (require, response) => {
