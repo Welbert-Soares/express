@@ -1,7 +1,13 @@
 const express = require("express");
 const app = express();
 
-app.get("/index", (require, response) => {
+app.use("/index", (require, response, next) => {
+    console.log('Será que serei chamado ?')
+    next()
+})
+
+app.get("/index", (require, response, next) => {
+    console.log("Resposta sendo enviada!!!");
   response.json({
     data: [
       { id: 7, name: "Ana", position: 1 },
@@ -13,7 +19,13 @@ app.get("/index", (require, response) => {
     limit: 3,
     status: 200,
   });
+
+    next()
 });
+
+app.use("/index", (require, response) => {
+    console.log('Sim fui chamado agora!!')
+})
 
 app.listen(8080, () => {
   console.log("backend funcionando!!");
