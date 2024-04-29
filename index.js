@@ -10,6 +10,26 @@ app.use("/index", (require, response, next) => {
     next()
 })
 
+app.get('/clientes/relatorio', (require, response) => {
+    response.send(`Cliente relatório: completo = ${require.query.completo} ano = ${require.query.ano}`)
+})
+
+app.post('/corpo', (require, response) => {
+    let corpo = ''
+    require.on('data', function(parte){
+        corpo += parte
+    })
+
+    require.on('end', function(){
+        response.send(corpo)
+    })
+})
+
+app.get('/clientes/:id', (require, response) => {
+    response.send(`Cliente ${require.params.id} selecionado!`)
+})
+
+
 app.get("/index", (require, response, next) => {
     console.log("Resposta sendo enviada!!!");
   response.json({
