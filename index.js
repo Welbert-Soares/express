@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
 
+const saudacao = require("./saudacaoMid");
+
+app.use(saudacao("Guilherme"));
+
 app.use("/index", (require, response, next) => {
     console.log('Será que serei chamado ?')
     next()
